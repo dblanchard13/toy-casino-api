@@ -11,77 +11,81 @@ describe('[<%= upCaseName %>]', function(){
     setTimeout(function(){done()}, 1500);
   })
 
-  it('should get all <%= name %>s', function(done) {
+  it('should get all <%= name %>s', function(done){
     request(app)
       .get('/api/<%= name %>s')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200)
-      .end(function(err, resp) {
-        expect(resp.body).to.be.an('array');
-        expect(resp.body.length).to.equal(3);
+      .end(function(err, resp){
+
         done();
-      })
+      });
   });
 
-  it('should create a <%= name %>', function(done) {
-    request(app)
-      .post('/api/<%= name %>s')
-      .send({
-        prop1: 'property 1',
-        prop2: 'propert 2'
-      })
-      .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(201)
-      .end(function(err, resp) {
-        expect(resp.body).to.be.an('object');
-        done();
-      })
-  });
-
-  it('should delete a <%= name %>', function(done) {
+  it('should create a <%= name %>', function(done){
     var <%= name %> = {
       prop1: 'property 1',
       prop2: 'property 2'
     };
+
     request(app)
       .post('/api/<%= name %>s')
       .send(<%= name %>)
       .set('Accept', 'application/json')
-      .end(function(err, resp) {
+      .expect('Content-Type', /json/)
+      .expect(201)
+      .end(function(err, resp){
+        expect(resp.body).to.be.an('object');
+        done();
+      });
+  });
+
+  it('should delete a <%= name %>', function(done){
+    var <%= name %> = {
+      prop1: 'property 1',
+      prop2: 'property 2'
+    };
+
+    request(app)
+      .post('/api/<%= name %>s')
+      .send(<%= name %>)
+      .set('Accept', 'application/json')
+      .end(function(err, resp){
         var id = resp.body._id;
         request(app)
           .delete('/api/<%= name %>s/' + id)
-          .end(function(err, resp) {
+          .end(function(err, resp){
             resp.text = JSON.parse(resp.text);
-            log.info('RESPONSE: ', resp);
             expect(resp.text.prop1).to.eql(<%= name %>.prop1);
             done();
           });
-      })
+      });
   });
 
-  it('should update a lion', function(done) {
+  it('should update a <%= name %>', function(done){
+    var <%= name %> = {
+      prop1: 'property 1',
+      prop2: 'property 2'
+    };
+
     request(app)
       .post('/api/<%= name %>s')
-      .send({
-        <%= name %>name: 'testing lion',
-        password: '100'
-      })
+      .send(<%= name %>)
       .set('Accept', 'application/json')
-      .end(function(err, resp) {
-        var lion = resp.body;
+      .end(function(err, resp){
+        var saved = resp.body;
+
         request(app)
-          .put('/api/<%= name %>s/' + lion.id)
+          .put('/api/<%= name %>s/' + saved._id)
           .send({
-            <%= name %>name: 'new name'
+            prop1: 'new property'
           })
-          .end(function(err, resp) {
-            expect(resp.body.<%= name %>name).to.equal('new name');
+          .end(function(err, resp){
+            expect(resp.body.prop1).to.equal('new property');
             done();
           });
-      })
+      });
   });
 });
 
