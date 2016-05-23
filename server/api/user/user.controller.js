@@ -101,7 +101,7 @@ exports.completeCreation = function(req, res, next){
     if(err){ return next(err); }
     log.info('saved user: ', saved);
 
-    res.json({token: res.token});
+    res.json({token: res.token, user: saved});
   });
 
 };

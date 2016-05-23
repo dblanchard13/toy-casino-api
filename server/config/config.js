@@ -28,8 +28,6 @@ try {
 // Setup db.log logging.
 process.env.loggingOff = envConfig.loggingOff || false;
 
-log.info('EnvConfig: ', envConfig);
-
 // merge the two config files together
 // the envConfig file will overwrite properties
 // on the config object
