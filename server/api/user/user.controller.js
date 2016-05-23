@@ -99,7 +99,6 @@ exports.completeCreation = function(req, res, next){
 
   user.save(function(err, saved){
     if(err){ return next(err); }
-    log.info('saved user: ', saved);
 
     res.json({token: res.token, user: saved});
   });
