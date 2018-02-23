@@ -1,5 +1,5 @@
 Toy Casino API
-==============
+===============
 
 Node.js & Express API that serves as the backend for [this site](https://dry-temple-81573.herokuapp.com)
 
